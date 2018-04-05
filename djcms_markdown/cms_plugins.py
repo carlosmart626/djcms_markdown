@@ -9,6 +9,7 @@ from djcms_markdown.models import CMSMarkdownPlugin
 class DJMarkdownCMSPlugin(CMSPluginBase):
     model = CMSMarkdownPlugin
     name = _('DJCMSMarkdown')
+    render_template = 'djcms_markdown/markdown.html'
     change_form_template = 'djcms_markdown/change_form.html'
 
     def render(self, context, instance, placeholder):
