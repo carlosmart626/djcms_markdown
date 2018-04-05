@@ -2,7 +2,7 @@
 
 This is a Django CMS Plugin to port Ghost Markdown editor, based in:
 * [cmsplugin-markdown](https://github.com/bitlabstudio/cmsplugin-markdown)
-* [Ghost-Markdown-Editor](https://github.com/timsayshey/Ghost-Markdown-Editor)
+* [django-simplemde](https://github.com/onepill/django-simplemde)
 * [Easy markdown and syntax highlighting in Django](https://www.ignoredbydinosaurs.com/posts/275-easy-markdown-and-syntax-highlighting-django)
 
 #### Demo

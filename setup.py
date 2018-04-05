@@ -18,6 +18,8 @@ REQUIREMENTS = [
     'django-cms>=3.2.0',
     'mistune==0.8.3',
     'Pygments==2.2.0',
+    'django-simplemde==0.1.2',
+
 ]
 TEST_REQUIRED = [
     'djangocms-helper==0.9.5',
