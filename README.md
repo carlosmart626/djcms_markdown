@@ -1,6 +1,6 @@
 # djcms_markdown
 
-This is a Django CMS Plugin to port Ghost Markdown editor, based in:
+This is a Django CMS Plugin to port Simple Markdown editor, based in:
 * [cmsplugin-markdown](https://github.com/bitlabstudio/cmsplugin-markdown)
 * [django-simplemde](https://github.com/onepill/django-simplemde)
 * [Easy markdown and syntax highlighting in Django](https://www.ignoredbydinosaurs.com/posts/275-easy-markdown-and-syntax-highlighting-django)
