@@ -17,7 +17,7 @@ except:
 REQUIREMENTS = [
     'django-cms>=3.2.0',
     'mistune==0.8.3',
-    'Pygments==2.2.0',
+    'Pygments==2.7.4',
     'django-simplemde==0.1.2',
 
 ]
