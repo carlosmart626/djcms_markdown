@@ -77,30 +77,39 @@ p code {
 }
 ```
 
-## Using highlight.js
+## Syntax highlighting (Pygments)
 ![Editor](https://cdn.rawgit.com/carlosmart626/djcms_markdown/master/media/code_example.png)
-Add to your template:
 
-**styles**
-```
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
-```
-More style in highlight.js [repo].(https://github.com/isagalaev/highlight.js/tree/master/src/styles)
+Fenced code blocks with a language are highlighted **server side** with
+[Pygments](https://pygments.org/), so no JavaScript highlighter is needed. The
+rendered output looks like this:
 
-**highlight.js**
+```html
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">hello</span>():</pre></div>
 ```
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+Since the markup is already tokenized into `<span>` elements, all you need is a
+Pygments stylesheet. Generate one with the `pygmentize` CLI (installed together
+with Pygments) and save it to your static files:
+
+```bash
+pygmentize -S dracula -f html -a .highlight > static/css/pygments.css
 ```
-**highlight.js init**
+
+Any [Pygments style](https://pygments.org/styles/) works — `monokai`,
+`friendly`, `github-dark`, ... List the available ones with
+`pygmentize -L styles`.
+
+Then link it from your template:
+
+```html
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/pygments.css' %}">
 ```
-<script>
-    $(document).ready(function () {
-        $('pre code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
-    });
-</script>
-```
+
+Note that code blocks **without** a language, and blocks whose language Pygments
+does not recognise, fall back to plain `<pre><code>...</code></pre>` and are not
+tokenized.
 
 ## Contributing
 
