@@ -2,7 +2,7 @@
 
 This is a Django CMS Plugin to port Simple Markdown editor, based in:
 * [cmsplugin-markdown](https://github.com/bitlabstudio/cmsplugin-markdown)
-* [django-simplemde](https://github.com/onepill/django-simplemde)
+* [django-easymde](https://github.com/WhyNotHugo/django-easymde)
 * [Easy markdown and syntax highlighting in Django](https://www.ignoredbydinosaurs.com/posts/275-easy-markdown-and-syntax-highlighting-django)
 
 #### Demo
@@ -26,9 +26,16 @@ In `settings.py`
 ```python
 INSTALLED_APPS = (
     # ...
+    'easymde',
     'djcms_markdown',
 )
 ```
+
+### Requirements
+
+* Python 3.10 - 3.14
+* Django 5.2 LTS
+* django-cms 5.1
 Add defult code styles:
 
 ```
@@ -74,6 +81,12 @@ More style in highlight.js [repo].(https://github.com/isagalaev/highlight.js/tre
 ```
 
 ## Contributing
-```
-python setup.py test
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r tests/requirements.txt
+pip install -e .
+pytest
+flake8 .
 ```
