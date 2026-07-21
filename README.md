@@ -14,6 +14,28 @@ Support:
 * Live preview
 * Code snippets
 
+## ⚠️ Breaking change in 0.3.0: raw HTML is now escaped
+
+Starting with 0.3.0 the markdown renderer **escapes raw HTML by default**.
+Previous releases (built on `mistune` 0.8) did *not* escape it, so raw markup
+embedded in a markdown plugin — iframes, video embeds, custom `<div>`s,
+`<script>` tags — was rendered as live HTML.
+
+With `mistune` 3.x the renderer defaults to `escape=True`, so that same content
+now shows up as literal text (`&lt;iframe ...&gt;`) on the page.
+
+This is intentional. The plugin template renders the result with `|safe`, so
+unescaped raw HTML allowed anyone able to edit a markdown plugin to inject
+arbitrary HTML/JavaScript into the site. Escaping is the secure default and it
+is here to stay.
+
+**Before upgrading**, review existing markdown plugin content for embedded raw
+HTML. Any markup that must stay live should move out of the markdown body and
+into a template or a dedicated CMS plugin (an HTML or video plugin, for
+example).
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
+
 ## Instalation
 
 ```bash
