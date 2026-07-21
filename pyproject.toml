@@ -52,7 +52,3 @@ DJANGO_SETTINGS_MODULE = "tests.settings"
 python_files = ["test_*.py"]
 testpaths = ["tests"]
 pythonpath = ["."]
-
-[tool.flake8]
-max-line-length = 120
-exclude = ["*/migrations/*", ".git", "__pycache__", "build", "dist", ".tox", "venv"]
