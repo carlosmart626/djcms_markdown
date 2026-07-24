@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.db import migrations, models
-import simplemde.fields
+from django.db import migrations
+import easymde.fields
 
 
 class Migration(migrations.Migration):
@@ -15,6 +12,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cmsmarkdownplugin',
             name='markdown_text',
-            field=simplemde.fields.SimpleMDEField(verbose_name='mardown content'),
+            field=easymde.fields.EasyMDEField(verbose_name='mardown content'),
         ),
     ]

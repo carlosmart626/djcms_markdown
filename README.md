@@ -2,7 +2,7 @@
 
 This is a Django CMS Plugin to port Simple Markdown editor, based in:
 * [cmsplugin-markdown](https://github.com/bitlabstudio/cmsplugin-markdown)
-* [django-simplemde](https://github.com/onepill/django-simplemde)
+* [django-easymde](https://github.com/WhyNotHugo/django-easymde)
 * [Easy markdown and syntax highlighting in Django](https://www.ignoredbydinosaurs.com/posts/275-easy-markdown-and-syntax-highlighting-django)
 
 #### Demo
@@ -13,6 +13,28 @@ Support:
 * Live editing
 * Live preview
 * Code snippets
+
+## ⚠️ Breaking change in 0.3.0: raw HTML is now escaped
+
+Starting with 0.3.0 the markdown renderer **escapes raw HTML by default**.
+Previous releases (built on `mistune` 0.8) did *not* escape it, so raw markup
+embedded in a markdown plugin — iframes, video embeds, custom `<div>`s,
+`<script>` tags — was rendered as live HTML.
+
+With `mistune` 3.x the renderer defaults to `escape=True`, so that same content
+now shows up as literal text (`&lt;iframe ...&gt;`) on the page.
+
+This is intentional. The plugin template renders the result with `|safe`, so
+unescaped raw HTML allowed anyone able to edit a markdown plugin to inject
+arbitrary HTML/JavaScript into the site. Escaping is the secure default and it
+is here to stay.
+
+**Before upgrading**, review existing markdown plugin content for embedded raw
+HTML. Any markup that must stay live should move out of the markdown body and
+into a template or a dedicated CMS plugin (an HTML or video plugin, for
+example).
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
 
 ## Instalation
 
@@ -26,9 +48,16 @@ In `settings.py`
 ```python
 INSTALLED_APPS = (
     # ...
+    'easymde',
     'djcms_markdown',
 )
 ```
+
+### Requirements
+
+* Python 3.10 - 3.14
+* Django 5.2 LTS
+* django-cms 5.1
 Add defult code styles:
 
 ```
@@ -48,32 +77,47 @@ p code {
 }
 ```
 
-## Using highlight.js
+## Syntax highlighting (Pygments)
 ![Editor](https://cdn.rawgit.com/carlosmart626/djcms_markdown/master/media/code_example.png)
-Add to your template:
 
-**styles**
-```
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
-```
-More style in highlight.js [repo].(https://github.com/isagalaev/highlight.js/tree/master/src/styles)
+Fenced code blocks with a language are highlighted **server side** with
+[Pygments](https://pygments.org/), so no JavaScript highlighter is needed. The
+rendered output looks like this:
 
-**highlight.js**
+```html
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">hello</span>():</pre></div>
 ```
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+Since the markup is already tokenized into `<span>` elements, all you need is a
+Pygments stylesheet. Generate one with the `pygmentize` CLI (installed together
+with Pygments) and save it to your static files:
+
+```bash
+pygmentize -S dracula -f html -a .highlight > static/css/pygments.css
 ```
-**highlight.js init**
+
+Any [Pygments style](https://pygments.org/styles/) works — `monokai`,
+`friendly`, `github-dark`, ... List the available ones with
+`pygmentize -L styles`.
+
+Then link it from your template:
+
+```html
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/pygments.css' %}">
 ```
-<script>
-    $(document).ready(function () {
-        $('pre code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
-    });
-</script>
-```
+
+Note that code blocks **without** a language, and blocks whose language Pygments
+does not recognise, fall back to plain `<pre><code>...</code></pre>` and are not
+tokenized.
 
 ## Contributing
-```
-python setup.py test
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r tests/requirements.txt
+pip install -e .
+pytest
+flake8 .
 ```

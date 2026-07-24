@@ -1,13 +1,9 @@
-from django.db import models
-
 from cms.models import CMSPlugin
-from cms.utils.compat.dj import python_2_unicode_compatible
-from simplemde.fields import SimpleMDEField
+from easymde.fields import EasyMDEField
 
 
-@python_2_unicode_compatible
 class CMSMarkdownPlugin(CMSPlugin):
-    markdown_text = SimpleMDEField(verbose_name=u'mardown content')
+    markdown_text = EasyMDEField(verbose_name='mardown content')
 
     def __str__(self):
         text = self.markdown_text

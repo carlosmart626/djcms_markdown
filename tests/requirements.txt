@@ -1,6 +1,9 @@
-# requirements from setup.py
-# other requirements
-djangocms-helper>=0.9.2,<0.10
-tox
-coverage
-flake8
+Django>=5.2,<6.0
+django-cms>=5.1
+django-easymde>=1.0.4
+mistune>=3.0
+Pygments>=2.17
+packaging>=23.0
+pytest>=8.0
+pytest-django>=4.8
+flake8>=7.0
